@@ -51,18 +51,22 @@ const Profile = () => {
   };
 
   useEffect(() => {
+    refetch();
+  },[])
+
+  useEffect(() => {
     if (isSuccess) {
       refetch();
-      toast.success(data.message || "Profile updated.");
+      toast.success(data?.message || "Profile updated.");
     }
     if (isError) {
-      toast.error(error.message || "Failed to updated profile!");
+      toast.error(error?.message || "Failed to updated profile!");
     }
   }, [error, updateUserData, isSuccess, isError]);
 
-  if (isLoading) return <h1>Profile Loading...</h1>;
+  if (isLoading || !data) return <h1>Profile Loading...</h1>;
 
-  const { user } = data;
+  const user = data && data.user;
 
   return (
     <div className="max-w-4xl mx-auto px-4 my-24">
